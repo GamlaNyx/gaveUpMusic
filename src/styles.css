@@ -1,0 +1,18 @@
+:root {
+  font-family: Tahoma, Verdana, "Microsoft YaHei", sans-serif;
+  color: #111;
+  background: #4c91d7;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --xp-blue: #245edb;
+  --xp-light: #e9f0ff;
+  --xp-border: #0a3d9e;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { width: 100%; min-width: 320px; min-height: 100%; margin: 0; }
+body { min-height: 100vh; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+.app-root { min-height: 100vh; }
+.xp-desktop { position: relative; width: 100%; min-height: 100vh; background: #4c91d7; }
