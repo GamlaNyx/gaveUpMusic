@@ -1,5 +1,6 @@
 export type AlbumId = 1 | 2 | 3 | 'M4';
 export type AlbumKey = 'M1' | 'M2' | 'M3' | 'M4';
+export type AppId = 'contract' | 'explorer' | 'album' | 'prompt';
 
 export type Album = {
   address: string;
