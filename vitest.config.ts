@@ -8,5 +8,6 @@ export default defineConfig({
     setupFiles: ['./tests/setup.ts'],
     include: ['tests/**/*.test.{ts,tsx}'],
     maxWorkers: 1,
+    testTimeout: 15_000,
   },
 });

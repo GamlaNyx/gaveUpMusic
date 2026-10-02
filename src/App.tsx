@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { Desktop, desktopItems } from './components/desktop/Desktop';
 import { WindowFrame } from './components/desktop/WindowFrame';
+import { AlbumViewer } from './components/modules/AlbumViewer';
+import { BlockchainExplorer } from './components/modules/BlockchainExplorer';
+import { ContractViewer } from './components/modules/ContractViewer';
 import { PromptFile } from './components/modules/PromptFile';
 import { challengeData } from './data/challenge';
-import { createInitialChallengeState } from './lib/challengeState';
+import { applyChallengeAction, createInitialChallengeState } from './lib/challengeState';
 import type { AppId, ChallengeState } from './types';
 
 const appTitles: Record<AppId, string> = {
@@ -13,48 +16,52 @@ const appTitles: Record<AppId, string> = {
   prompt: '题目提示.txt - 记事本',
 };
 
-function PlaceholderModule({ appId, state }: { appId: AppId; state: ChallengeState }) {
-  if (appId === 'prompt') return <PromptFile />;
-  return <div className="module-placeholder">
-    <h2>{appTitles[appId]}</h2>
-    <p>本地模拟环境已就绪，尚未连接真实区块链。</p>
-    <div className="simulation-status"><span>模拟余额</span><strong>{state.balance}</strong></div>
-  </div>;
-}
-
 export default function App() {
   const [activeWindow, setActiveWindow] = useState<AppId | null>(null);
   const [openWindows, setOpenWindows] = useState<AppId[]>([]);
-  const [maximized, setMaximized] = useState(false);
-  const [challengeState] = useState(() => createInitialChallengeState(challengeData));
+  const [maximizedWindow, setMaximizedWindow] = useState<AppId | null>(null);
+  const [challengeState, setChallengeState] = useState<ChallengeState>(() => createInitialChallengeState(challengeData));
+  const [albumAddress, setAlbumAddress] = useState('');
 
   const openWindow = (id: AppId) => {
     setOpenWindows((current) => current.includes(id) ? current : [...current, id]);
     setActiveWindow(id);
-    setMaximized(false);
   };
-  const restoreWindow = (id: AppId) => {
-    setActiveWindow(id);
-    setMaximized(false);
-  };
+  const restoreWindow = (id: AppId) => setActiveWindow(id);
   const minimizeWindow = () => setActiveWindow(null);
   const closeWindow = (id: AppId) => {
-    setOpenWindows((current) => current.filter((windowId) => windowId !== id));
-    setActiveWindow((current) => current === id ? null : current);
-    setMaximized(false);
+    const remaining = openWindows.filter((windowId) => windowId !== id);
+    setOpenWindows(remaining);
+    if (activeWindow === id) setActiveWindow(remaining.at(-1) ?? null);
+    setMaximizedWindow((current) => current === id ? null : current);
+  };
+  const callContractFunction = (action: Parameters<typeof applyChallengeAction>[1]) => {
+    const result = applyChallengeAction(challengeState, action, challengeData);
+    if (result.ok) setChallengeState(result.state);
+    return result;
+  };
+  const viewAlbumAddress = (albumId: number) => Object.values(challengeData.albums).find((album) => album.id === albumId)?.address ?? null;
+  const openAlbum = (address: string) => {
+    setAlbumAddress(address);
+    openWindow('album');
   };
 
   return <div className="app-root">
     <Desktop openWindow={openWindow} openWindows={openWindows} activeWindow={activeWindow} onRestore={restoreWindow} onMinimize={minimizeWindow} />
-    {activeWindow && <WindowFrame
-      title={appTitles[activeWindow]}
-      icon={desktopItems.find((item) => item.id === activeWindow)?.icon ?? ''}
-      onClose={() => closeWindow(activeWindow)}
+    {openWindows.map((id) => <WindowFrame
+      key={id}
+      title={appTitles[id]}
+      icon={desktopItems.find((item) => item.id === id)?.icon ?? ''}
+      active={activeWindow === id}
+      onClose={() => closeWindow(id)}
       onMinimize={minimizeWindow}
-      onToggleMaximize={() => setMaximized((value) => !value)}
-      maximized={maximized}
+      onToggleMaximize={() => setMaximizedWindow((current) => current === id ? null : id)}
+      maximized={maximizedWindow === id}
     >
-      <PlaceholderModule appId={activeWindow} state={challengeState} />
-    </WindowFrame>}
+      {id === 'prompt' && <PromptFile />}
+      {id === 'contract' && <ContractViewer data={challengeData} state={challengeState} onAction={callContractFunction} onViewAlbumsAddress={viewAlbumAddress} />}
+      {id === 'explorer' && <BlockchainExplorer data={challengeData} onOpenAlbum={openAlbum} />}
+      {id === 'album' && <AlbumViewer data={challengeData} state={challengeState} address={albumAddress} onAddressChange={setAlbumAddress} />}
+    </WindowFrame>)}
   </div>;
 }
