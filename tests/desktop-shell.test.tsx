@@ -10,6 +10,7 @@ describe('XP desktop shell', () => {
 
     expect(screen.getByRole('region', { name: 'Windows XP 桌面' })).toBeTruthy();
     expect(screen.queryByRole('dialog')).toBeNull();
+    expect(screen.getByRole('button', { name: '开始' }).querySelector('img')?.getAttribute('src')).toContain('/imgs/图标/start.png');
 
     await user.dblClick(screen.getByRole('button', { name: '合约查看器' }));
     const dialog = screen.getByRole('dialog', { name: '合约查看器' });

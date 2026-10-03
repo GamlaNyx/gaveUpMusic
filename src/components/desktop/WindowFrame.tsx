@@ -1,16 +1,17 @@
 import type { ReactNode } from 'react';
 
-export function WindowFrame({ title, icon, onClose, onMinimize, onToggleMaximize, maximized, children }: {
+export function WindowFrame({ title, icon, active, onClose, onMinimize, onToggleMaximize, maximized, children }: {
   title: string;
   icon: string;
+  active: boolean;
   onClose: () => void;
   onMinimize: () => void;
   onToggleMaximize: () => void;
   maximized: boolean;
   children: ReactNode;
 }) {
-  return <div className="window-layer" onMouseDown={(event) => event.target === event.currentTarget && onMinimize()}>
-    <section className={`window ${maximized ? 'window-maximized' : ''}`} role="dialog" aria-modal="true" aria-label={title}>
+  return <div className={`window-layer ${active ? 'is-active' : 'is-hidden'}`} hidden={!active} aria-hidden={!active} onMouseDown={(event) => active && event.target === event.currentTarget && onMinimize()}>
+    <section className={`window ${maximized ? 'window-maximized' : ''}`} role="dialog" aria-modal={active} aria-label={title}>
       <header className="window-bar">
         <div className="window-title"><img src={icon} alt="" /><strong>{title}</strong></div>
         <div className="window-controls">

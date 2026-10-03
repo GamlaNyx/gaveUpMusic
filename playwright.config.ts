@@ -5,6 +5,7 @@ export default defineConfig({
   use: {
     baseURL: 'http://127.0.0.1:5173',
     browserName: 'chromium',
+    launchOptions: { channel: 'chrome' },
   },
   webServer: {
     command: 'npm run dev -- --host 127.0.0.1',

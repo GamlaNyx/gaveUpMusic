@@ -1,4 +1,5 @@
 import type { AppId } from '../../types';
+import { assetUrl } from '../../lib/assets';
 import type { DesktopItem } from './DesktopIcon';
 
 export function Taskbar({ items, openWindows, activeWindow, onStart, onRestore, onMinimize }: {
@@ -11,7 +12,7 @@ export function Taskbar({ items, openWindows, activeWindow, onStart, onRestore, 
 }) {
   return <footer className="xp-taskbar">
     <button className="xp-start" type="button" aria-label="开始" onClick={onStart}>
-      <img src={items.find((item) => item.id === 'prompt')?.icon} alt="" /><strong>开始</strong>
+      <img src={assetUrl('imgs/图标/start.png')} alt="" /><strong>开始</strong>
     </button>
     <div className="quick-launch"><button type="button" aria-label="显示桌面" onClick={onMinimize}>▣</button></div>
     <div className="taskbar-tasks">

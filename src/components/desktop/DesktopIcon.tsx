@@ -17,6 +17,12 @@ export function DesktopIcon({ item, selected, onSelect, onOpen }: {
     type="button"
     onClick={onSelect}
     onDoubleClick={() => onOpen(item.id)}
+    onKeyDown={(event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        onOpen(item.id);
+      }
+    }}
     title={`双击打开 ${item.label}`}
   >
     <span className="xp-icon-image"><img src={item.icon} alt="" /></span>
