@@ -7,3 +7,10 @@ playwright-report/
 test-results/
 *.tsbuildinfo
 .vite/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+data/区块链浏览器前端参考/
