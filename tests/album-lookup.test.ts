@@ -25,6 +25,15 @@ describe('lookupAlbumAddress', () => {
     if (result.kind === 'album') expect(result.lyrics).toBe(challengeData.albums.M4.lyrics);
   });
 
+  it('keeps the configured album cover asset on every album fixture', () => {
+    expect(Object.values(challengeData.albums).map((album) => album.cover)).toEqual([
+      '/imgs/专辑/So I gave up music.jpg',
+      '/imgs/专辑/Sunflower.jpg',
+      '/imgs/专辑/Flag.jpg',
+      '/imgs/专辑/Chasing summer again.jpg',
+    ]);
+  });
+
   it('returns not-found for an unknown address', () => {
     expect(lookupAlbumAddress('0x0000000000000000000000000000000000000000', createInitialChallengeState(challengeData), challengeData).kind).toBe('not-found');
   });

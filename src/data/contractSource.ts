@@ -40,4 +40,33 @@ contract AlbumStore {
     function viewAlbumsAddress(uint256 _id) public view returns (address) {
         // 根据 ID 查询专辑地址
     }
+}
+
+contract Album {
+    uint256 public id;
+    string public name;
+    string public artist;
+    uint256 public price;
+    address public owner;
+    string public Lyrics;
+
+    constructor(uint256 _id, string memory _name, string memory _artist, uint256 _price, address _owner) {
+        id = _id;
+        name = _name;
+        artist = _artist;
+        price = _price;
+        owner = _owner;
+    }
+
+    function setLyrics(string memory _lyrics) public {
+        // 只有 owner 可以更新歌词
+    }
+
+    function getLyrics() public view returns (string memory) {
+        return Lyrics;
+    }
+
+    function getname() public view returns (string memory) {
+        return name;
+    }
 }`;

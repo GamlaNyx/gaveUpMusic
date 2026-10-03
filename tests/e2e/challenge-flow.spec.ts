@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
 const addresses = {
-  contract: '0x1000000000000000000000000000000000000001',
-  flagAlbum: '0x3000000000000000000000000000000000000003',
+  contract: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+  flagAlbum: '0x14dC79964da2C08b23698B3D3cc7Ca32193d9955',
 };
 
 async function openDesktopApp(page: Page, label: string) {
@@ -50,7 +50,7 @@ test('players follow explorer records, purchase the Flag album, and reveal lyric
   await password.fill('Chasing summer again');
   await contract.getByRole('button', { name: '调用 benefit' }).click();
   await contract.getByRole('button', { name: '调用 benefit' }).click();
-  await expect(contract.getByText('模拟余额：100')).toBeVisible();
+  await expect(contract.getByText('余额：100')).toBeVisible();
   await contract.getByLabel('buyAlbum 专辑 ID').fill('3');
   await contract.getByRole('button', { name: '购买专辑' }).click();
   await expect(contract.getByText(/Flag 已购买/)).toBeVisible();

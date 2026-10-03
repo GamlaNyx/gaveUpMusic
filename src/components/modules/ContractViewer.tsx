@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { ActionResult, ChallengeAction, ChallengeData } from '../../types';
 import { normalizeAddress } from '../../lib/normalizeAddress';
+import { SolidityCode } from '../SolidityCode';
 
 export function ContractViewer({ data, state, onAction, onViewAlbumsAddress }: {
   data: ChallengeData;
@@ -44,10 +45,10 @@ export function ContractViewer({ data, state, onAction, onViewAlbumsAddress }: {
       {addressMessage && <p className={recognized ? 'inline-success' : 'inline-error'} role="status">{addressMessage}</p>}
     </form>
     {recognized && <>
-      <div className="contract-status"><span>模拟账户余额</span><strong>模拟余额：{state.balance}</strong></div>
+      <div className="contract-status"><span>账户余额</span><strong>余额：{state.balance}</strong></div>
       <section className="contract-source-panel" aria-label="合约源代码">
         <div className="panel-title"><span>AlbumStore.sol</span><span>Solidity</span></div>
-        <pre><code>{data.contractSource}</code></pre>
+        <SolidityCode source={data.contractSource} />
       </section>
       <div className="contract-functions">
         <section className="function-card">

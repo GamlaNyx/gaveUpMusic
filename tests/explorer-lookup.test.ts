@@ -4,11 +4,17 @@ import { lookupExplorerAddress } from '../src/lib/explorerLookup';
 
 describe('lookupExplorerAddress', () => {
   it('resolves the challenge contract to its deployer', () => {
+    expect(challengeData.contractAddress).toBe('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266');
+    expect(challengeData.deployerAddress).toBe('0x70997970C51812dc3A010C7d01b50e0d17dc79C8');
     expect(lookupExplorerAddress(challengeData.contractAddress, challengeData)).toEqual({
       kind: 'contract',
       address: challengeData.contractAddress,
       deployerAddress: challengeData.deployerAddress,
     });
+  });
+
+  it('accepts a valid address with surrounding whitespace', () => {
+    expect(lookupExplorerAddress(`  ${challengeData.contractAddress}  `, challengeData).kind).toBe('contract');
   });
 
   it('resolves the deployer to three recent transactions in order', () => {

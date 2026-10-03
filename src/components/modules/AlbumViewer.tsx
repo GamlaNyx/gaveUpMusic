@@ -37,14 +37,14 @@ export function AlbumViewer({ data, state, address, onAddressChange }: {
     </form>
     {result?.kind === 'not-found' && <div className="result-empty" role="status"><strong>不存在的合约地址</strong><span>请从浏览器记录或合约函数结果中查找专辑地址。</span></div>}
     {result?.kind === 'album' && <article className="album-record">
-      <div className="album-cover"><span>ALBUM</span><strong>{result.album.name === 'Flag' ? 'F' : result.album.name.slice(0, 1)}</strong><small>Q3 LOCAL STORE</small></div>
+      <div className="album-cover"><img src={result.album.cover} alt={`${result.album.name} 专辑封面`} /><span>ALBUM</span><small>Q3 LOCAL STORE</small></div>
       <div className="album-details">
         <span className="album-id">ALBUM #{result.album.id}</span>
         <h3>{result.album.name}</h3>
         <dl>
           <div><dt>艺术家</dt><dd>{result.album.artist}</dd></div>
           <div><dt>专辑 ID</dt><dd>{result.album.id}</dd></div>
-          <div><dt>价格</dt><dd>{result.album.price} 模拟余额</dd></div>
+          <div><dt>价格</dt><dd>{result.album.price} 余额</dd></div>
           <div><dt>Owner</dt><dd>{state.albumOwners[result.album.id] === data.playerAddress ? '玩家账户' : '部署者账户'}</dd></div>
         </dl>
         <section className="album-lyrics">

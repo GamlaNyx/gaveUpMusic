@@ -4,6 +4,7 @@ export type AppId = 'contract' | 'explorer' | 'album' | 'prompt';
 
 export type Album = {
   address: string;
+  cover: string;
   id: AlbumId;
   name: string;
   artist: string;

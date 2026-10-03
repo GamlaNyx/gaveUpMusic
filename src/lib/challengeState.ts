@@ -18,7 +18,7 @@ export function applyChallengeAction(state: ChallengeState, action: ChallengeAct
     return {
       state: { ...state, balance: state.balance + data.benefitAward },
       ok: true,
-      message: `福利到账 ${data.benefitAward} 模拟余额。`,
+      message: `福利到账 ${data.benefitAward} 余额。`,
       value: state.balance + data.benefitAward,
     };
   }
@@ -27,7 +27,7 @@ export function applyChallengeAction(state: ChallengeState, action: ChallengeAct
     .map((key) => data.albums[key])
     .find((album) => album.id === action.albumId);
   if (!albumEntry) return failed(state, '不存在这个专辑 ID。');
-  if (state.balance < albumEntry.price) return failed(state, '模拟余额不足，无法购买这张专辑。');
+  if (state.balance < albumEntry.price) return failed(state, '余额不足，无法购买这张专辑。');
   return {
     state: {
       balance: state.balance - albumEntry.price,
