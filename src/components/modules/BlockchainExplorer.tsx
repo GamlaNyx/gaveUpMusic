@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { ChallengeData, ExplorerResult } from '../../types';
 import { lookupExplorerAddress } from '../../lib/explorerLookup';
 
-export function BlockchainExplorer({ data, onOpenAlbum }: { data: ChallengeData; onOpenAlbum: (address: string) => void }) {
+export function BlockchainExplorer({ data }: { data: ChallengeData }) {
   const [address, setAddress] = useState('');
   const [result, setResult] = useState<ExplorerResult | null>(null);
   const search = (value = address) => {
@@ -38,7 +38,7 @@ export function BlockchainExplorer({ data, onOpenAlbum }: { data: ChallengeData;
       {result.kind === 'transaction' && <>
         <div className="result-heading"><span>交易记录</span><strong>{result.transactionType === 'album-purchase' ? '专辑购买' : '未知交易'}</strong></div>
         <div className="result-field"><span>交易地址</span><code>{result.address}</code></div>
-        {result.albumAddress && <div className="result-field"><span>专辑合约</span><code>{result.albumAddress}</code><button className="xp-button" type="button" onClick={() => onOpenAlbum(result.albumAddress!)}>在专辑查看器打开</button></div>}
+        {result.albumAddress && <div className="result-field"><span>专辑合约</span><code>{result.albumAddress}</code></div>}
         {!result.albumAddress && <p className="result-muted">没有可查看的专辑合约。</p>}
       </>}
     </section>}

@@ -41,10 +41,6 @@ export default function App() {
     return result;
   };
   const viewAlbumAddress = (albumId: number) => Object.values(challengeData.albums).find((album) => album.id === albumId)?.address ?? null;
-  const openAlbum = (address: string) => {
-    setAlbumAddress(address);
-    openWindow('album');
-  };
 
   return <div className="app-root">
     <Desktop openWindow={openWindow} openWindows={openWindows} activeWindow={activeWindow} onRestore={restoreWindow} onMinimize={minimizeWindow} />
@@ -60,7 +56,7 @@ export default function App() {
     >
       {id === 'prompt' && <PromptFile />}
       {id === 'contract' && <ContractViewer data={challengeData} state={challengeState} onAction={callContractFunction} onViewAlbumsAddress={viewAlbumAddress} />}
-      {id === 'explorer' && <BlockchainExplorer data={challengeData} onOpenAlbum={openAlbum} />}
+      {id === 'explorer' && <BlockchainExplorer data={challengeData} />}
       {id === 'album' && <AlbumViewer data={challengeData} state={challengeState} address={albumAddress} onAddressChange={setAlbumAddress} />}
     </WindowFrame>)}
   </div>;

@@ -31,9 +31,14 @@ describe('album-store challenge flow', () => {
     await user.click(within(explorer).getByRole('button', { name: '查询' }));
     await user.click(within(explorer).getByRole('button', { name: '查询部署者' }));
     await user.click(within(explorer).getByRole('button', { name: '查看交易 A2' }));
-    await user.click(within(explorer).getByRole('button', { name: '在专辑查看器打开' }));
-
+    expect(within(explorer).queryByRole('button', { name: '在专辑查看器打开' })).toBeNull();
+    const m4Address = challengeData.albums.M4.address;
+    await user.click(screen.getByRole('button', { name: '开始' }));
+    await user.click(screen.getByRole('menuitem', { name: '专辑查看器' }));
     const album = screen.getByRole('dialog', { name: '专辑查看器' });
+    await user.clear(within(album).getByLabelText('搜索地址'));
+    await user.type(within(album).getByLabelText('搜索地址'), m4Address);
+    await user.click(within(album).getByRole('button', { name: '查询专辑' }));
     expect(within(album).getByText('Chasing summer again')).toBeTruthy();
     expect(within(album).getByText(/One song brings the summer back/)).toBeTruthy();
 

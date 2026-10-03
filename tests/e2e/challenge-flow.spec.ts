@@ -38,9 +38,12 @@ test('players follow explorer records, purchase the Flag album, and reveal lyric
   await explorer.getByRole('button', { name: '查询', exact: true }).click();
   await explorer.getByRole('button', { name: '查询部署者' }).click();
   await explorer.getByRole('button', { name: '查看交易 A2' }).click();
-  await explorer.getByRole('button', { name: '在专辑查看器打开' }).click();
-
+  await expect(explorer.getByRole('button', { name: '在专辑查看器打开' })).toHaveCount(0);
+  await page.getByRole('button', { name: '开始' }).click();
+  await page.getByRole('menuitem', { name: '专辑查看器' }).click();
   const album = page.getByRole('dialog', { name: '专辑查看器' });
+  await album.getByLabel('搜索地址').fill('0x23618e81E3f5cdF7f54C3d65f7FBc0aBf5B21E8f');
+  await album.getByRole('button', { name: '查询专辑' }).click();
   await expect(album.getByRole('heading', { name: 'Chasing summer again' })).toBeVisible();
   await expect(album.getByText(/One song brings the summer back/)).toBeVisible();
 
