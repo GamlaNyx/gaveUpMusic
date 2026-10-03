@@ -9,6 +9,7 @@
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
+    "types": ["node", "vite/client"],
     "noEmit": true,
     "jsx": "react-jsx",
     "strict": true,
