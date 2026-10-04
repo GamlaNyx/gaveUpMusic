@@ -1,5 +1,6 @@
 import type { ChallengeData } from '../types';
 import { contractSource } from './contractSource';
+import { assetUrl } from '../lib/assets';
 
 const deployerAddress = '0x70997970C51812dc3A010C7d01b50e0d17dc79C8';
 
@@ -14,7 +15,7 @@ export const challengeData: ChallengeData = {
   albums: {
     M1: {
       address: '0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc',
-      cover: '/imgs/专辑/So I gave up music.jpg',
+      cover: assetUrl('imgs/专辑/So I gave up music.jpg'),
       id: 1,
       name: 'So I gave up music.',
       artist: 'Yorushika',
@@ -24,7 +25,7 @@ export const challengeData: ChallengeData = {
     },
     M2: {
       address: '0x976EA74026E726554dB657fA54763abd0C3a0aa9',
-      cover: '/imgs/专辑/Sunflower.jpg',
+      cover: assetUrl('imgs/专辑/Sunflower.jpg'),
       id: 2,
       name: 'Sunflower',
       artist: 'n-buna',
@@ -34,7 +35,7 @@ export const challengeData: ChallengeData = {
     },
     M3: {
       address: '0x14dC79964da2C08b23698B3D3cc7Ca32193d9955',
-      cover: '/imgs/专辑/Flag.jpg',
+      cover: assetUrl('imgs/专辑/Flag.jpg'),
       id: 3,
       name: 'Flag',
       artist: 'gamla',
@@ -44,7 +45,7 @@ export const challengeData: ChallengeData = {
     },
     M4: {
       address: '0x23618e81E3f5cdF7f54C3d65f7FBc0aBf5B21E8f',
-      cover: '/imgs/专辑/Chasing summer again.jpg',
+      cover: assetUrl('imgs/专辑/Chasing summer again.jpg'),
       id: 'M4',
       name: 'Chasing summer again',
       artist: 'Unknown',
